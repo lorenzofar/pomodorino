@@ -1,0 +1,19 @@
+{
+  "name": "electra-edge",
+  "version": "1.0.0",
+  "description": "Electra for edge devices",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lorenzofar/electra-edge.git"
+  },
+  "author": "Lorenzo Farinelli",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lorenzofar/electra-edge/issues"
+  },
+  "homepage": "https://github.com/lorenzofar/electra-edge#readme"
+}
