@@ -21,6 +21,9 @@ class SettingsManager {
     private static initMutex: locks.Mutex;
 
     public static initialize() {
+
+        console.log("[SETTINGS] initializing settings");
+
         this.initMutex = new locks.Mutex();
 
         /* ===== BINDINGS ===== */
@@ -75,5 +78,7 @@ class SettingsManager {
         this.writeConfigFile(blankConfig);
     }
 }
+
+SettingsManager.initialize();
 
 export default SettingsManager;
