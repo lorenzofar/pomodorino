@@ -17,7 +17,7 @@ class SocketManager {
     public static initialize() {
         let email: string;
         let password: string;
-        let qs = `email=${email}&password=${password}&mode=provider`;
+        let qs = `username=${email}&password=${password}&mode=provider`;
         this.io = socket_io(SOCKET_URL, { autoConnect: false, query: qs });
     }
 
@@ -27,7 +27,7 @@ class SocketManager {
         if (this.io == null) return;
 
         this.io.open();
-
+        
         this.io.on("connect", () => {
             console.log("Socket connected");
         });
