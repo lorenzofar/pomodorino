@@ -1,5 +1,5 @@
 {
-  "name": "electra-edge",
+  "name": "pomodorino",
   "version": "1.0.0",
   "description": "Electra for edge devices",
   "main": "app.js",
@@ -30,7 +30,9 @@
     "socket.io-client": "^2.1.1"
   },
   "devDependencies": {
+    "@types/figlet": "^1.2.0",
     "@types/locks": "^0.2.0",
-    "@types/node": "^10.12.10"
+    "@types/node": "^10.12.10",
+    "figlet": "^1.2.1"
   }
 }
