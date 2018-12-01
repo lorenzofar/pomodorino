@@ -11,7 +11,7 @@ const SOCKET_URL: string = "http://localhost:3000";
 class SocketManager {
     private static io: SocketIOClient.Socket = null;
 
-    //TODO: Hook module to credentials manager to fire an event 
+    //TODO: Hook module to credentials manager to fire an event id:15
     // when credentials change and reconnect the socket accordingly
 
     public static initialize() {
@@ -23,7 +23,7 @@ class SocketManager {
 
     public static connect() {
         // Before doing anything, check connection status
-        //TODO: Retrieve credentials and build handshake message  
+        //TODO: Retrieve credentials and build handshake message id:3
         if (this.io == null) return;
 
         this.io.open();
