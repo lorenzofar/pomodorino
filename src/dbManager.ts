@@ -39,7 +39,7 @@ class DbManager {
      * @param username Username of the user
      */
     private static createUserTable(username: string) {
-        //FIXME: change columns with real data we retrieve
+        //FIXME: change columns with real data we retrieve id:24
         console.log(`[DB] creating table for user ${username}`);
         this.dbClient.schema.createTable(username, tableBuilder => {
             tableBuilder.float("light");

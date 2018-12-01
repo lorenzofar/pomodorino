@@ -18,10 +18,10 @@ class Orchestrator {
     }
 
     private static tick() {
-        //TODO: Read data from sensors
-        //TODO: Call analyzer function
-        //TODO: Pack everything
-        //TODO: Check if the socket is active and send
+        //TODO: Read data from sensors id:28
+        //TODO: Call analyzer function id:31
+        //TODO: Pack everything id:21
+        //TODO: Check if the socket is active and send id:18
     }
 }
 
