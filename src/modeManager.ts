@@ -9,26 +9,45 @@
  *  - AP ON / the device creates an AP to change settings
  */
 
-enum modes {
-    AUTO,
-    STREAM,
-    SYNC,
-    CONFIG
-};
+// TODO: 
+
+// NOTE: During configuration, the device continues working
+import {modes, modeSubscriber} from "./models/modes";
+
 
 class ModeManager {
     private static _mode: modes;
 
-    public static initialize(){
+    private static subscribers: modeSubscriber[];
+
+    public static initialize() {
+        // By default the device starts in AUTO mode
         this._mode = modes.AUTO;
+        this.subscribers = [];
+        this.subscribe = this.subscribe.bind(this);
     }
 
-    public static get mode(): modes{
+    public static subscribe(subscriber: modeSubscriber): boolean {
+        let index = this.subscribers.map(s => s.id).indexOf(subscriber.id);
+        if (index != -1) return false;
+        this.subscribers.push(subscriber);
+        console.log(`[MODE] ${subscriber.id} subscribed`);
+        return true;
+    }
+
+    public static get mode(): modes {
         return this._mode;
     }
 
-    public static set mode(newMode: modes){
+    public static set mode(newMode: modes) {
+        console.log(`[MODE] changing device mode to ${newMode}`);
         this._mode = newMode;
+        this.notifySubscribers();
+    }
+
+    private static notifySubscribers() {
+        console.log("[MODE] notifying subscribers");
+        this.subscribers.forEach(s => s.handler(this._mode));
     }
 
 }
