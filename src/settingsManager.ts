@@ -22,7 +22,7 @@ class SettingsManager {
 
     public static initialize() {
 
-        console.log("[SETTINGS] initializing settings");
+        console.log("[SETTINGS] initializing");
 
         this.initMutex = new locks.Mutex();
 

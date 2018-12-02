@@ -24,6 +24,8 @@ class SocketManager {
 
     public static initialize() {
 
+        console.log("[SOCKET] initializing");
+
         /* ===== BINDINGS ===== */
 
         this.handleModeChange = this.handleModeChange.bind(this);

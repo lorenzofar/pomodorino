@@ -12,6 +12,9 @@ class DbManager {
     private static dbClient: knex;
 
     public static initialize() {
+
+        console.log("[DB] initializing");
+
         this.dbClient = knex(config);
 
         /* ===== BINDINGS ===== */
@@ -20,7 +23,7 @@ class DbManager {
     }
 
     public static insertDataPoint(dataPoint: DataPoint) {
-
+        //TODO: 
     }
 
     /**

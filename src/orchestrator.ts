@@ -1,13 +1,21 @@
 import { CronJob } from "cron";
 
+import ModeManager from "./modeManager";
+import { modes } from "./models/modes";
+
+import DataRetriever from "./dataRetriever";
+
 const CLOCK = 2; // expressed in seconds
 const CRON_SCHEDULE = `*/${CLOCK} * * * * *`;
 
 class Orchestrator {
     private static clockJob: CronJob;
 
+    private static tickCount: number;
+
     public static initialize() {
         console.log("[CLOCK] initializing");
+        this.tickCount = 0;
         this.tick = this.tick.bind(this);
         this.clockJob = new CronJob(CRON_SCHEDULE, this.tick);
         this.clockJob.start();
@@ -19,6 +27,7 @@ class Orchestrator {
 
     private static tick() {
         //TODO: Read data from sensors
+        let data = DataRetriever.data;
         //TODO: Call analyzer function
         //TODO: Pack everything
         //TODO: Check if the socket is active and send

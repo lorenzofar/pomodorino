@@ -9,11 +9,8 @@
  *  - AP ON / the device creates an AP to change settings
  */
 
-// TODO: 
-
 // NOTE: During configuration, the device continues working
-import {modes, modeSubscriber} from "./models/modes";
-
+import { modes, modeSubscriber } from "./models/modes";
 
 class ModeManager {
     private static _mode: modes;
@@ -21,6 +18,9 @@ class ModeManager {
     private static subscribers: modeSubscriber[];
 
     public static initialize() {
+
+        console.log("[MODE] initializing");
+
         // By default the device starts in AUTO mode
         this._mode = modes.AUTO;
         this.subscribers = [];
@@ -49,7 +49,6 @@ class ModeManager {
         console.log("[MODE] notifying subscribers");
         this.subscribers.forEach(s => s.handler(this._mode));
     }
-
 }
 
 ModeManager.initialize();
