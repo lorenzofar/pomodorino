@@ -16,10 +16,10 @@ const ID = "socketmanager";
 class SocketManager {
     private static io: SocketIOClient.Socket = null;
 
-    //TODO: Hook module to credentials manager to fire an event 
+    //TODO: Hook module to credentials manager to fire an event id:52
     // when credentials change and reconnect the socket accordingly
 
-    //TODO: During initialization, socket manager should understand in which the 
+    //TODO: During initialization, socket manager should understand in which the id:37
     // device is working in and start the websocket if needed
 
     public static initialize() {
@@ -42,7 +42,7 @@ class SocketManager {
     }
 
     private static handleModeChange(mode: modes) {
-        //TODO: Connect / disconnect socket accordingly
+        //TODO: Connect / disconnect socket accordingly id:42
         if (mode == modes.STREAM) {
             this.connect();
         }
@@ -53,7 +53,7 @@ class SocketManager {
 
     public static connect() {
         // Before doing anything, check connection status
-        //TODO: Retrieve credentials and build handshake message  
+        //TODO: Retrieve credentials and build handshake message id:47
         if (this.io == null) return;
 
         console.log("[SOCKET] opening connection")

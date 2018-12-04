@@ -28,7 +28,7 @@ class ServerManager {
         this.app.get("/", (req: express.Request, res: express.Response) => {
             res.send("pomodorino is alive");
         });
-        //TODO: Set up other routes to change settings
+        //TODO: Set up other routes to change settings id:55
     }
 
     private static handleModeChange(mode: modes) {
@@ -42,27 +42,27 @@ class ServerManager {
     }
 
     /**
-     * TODO:, NOTE: 
-     * Find a way to authorize incoming requests and perform authentication with NECST APIs
-     * since the device is not connected to the internet and hence we cannot connect to backend
-     * We could provide an authentication check in the served webpage (w/ js),  
-     * but it could suffer from user manipulation and lack of connection
-     * 
-     * > A possible solution could be to exchange a defined passphrase between the two parts
-     * But also in this case, I could easily reverse engineer the device and find the passphrase
-     * 
-     * Or, at least, I can make an assumption: 
-     * Given that the whole system is fault-tolerant and if a user tries to push invalid or unathorized
-     * data they are rejected, I can still let the user configure the device as it likes, even setting
-     * an user that does not exist.
-     * 
-     * However, to prevent intrusion from other people connecting to the device when the server is active
-     * I could choose between two techniques:
-     * > use a wi-fi authentication method - this is however tied to the communication tecnhology we choose to use
-     *   and hence would not be valid anymore in case we switch to another one
-     * > use a passphrase known only by the device and the user to sign messages
-     *   It could be printed on an LCD screen connected to the device
-     *   In this case it would be indipendent from the communication technology we rely on
+     * TODO: , NOTE: id:51
+* Find a way to authorize incoming requests and perform authentication with NECST APIs
+* since the device is not connected to the internet and hence we cannot connect to backend
+* We could provide an authentication check in the served webpage (w/ js),  
+* but it could suffer from user manipulation and lack of connection
+* 
+* > A possible solution could be to exchange a defined passphrase between the two parts
+* But also in this case, I could easily reverse engineer the device and find the passphrase
+* 
+* Or, at least, I can make an assumption: 
+* Given that the whole system is fault-tolerant and if a user tries to push invalid or unathorized
+* data they are rejected, I can still let the user configure the device as it likes, even setting
+* an user that does not exist.
+* 
+* However, to prevent intrusion from other people connecting to the device when the server is active
+* I could choose between two techniques:
+* > use a wi-fi authentication method - this is however tied to the communication tecnhology we choose to use
+*   and hence would not be valid anymore in case we switch to another one
+* > use a passphrase known only by the device and the user to sign messages
+*   It could be printed on an LCD screen connected to the device
+*   In this case it would be indipendent from the communication technology we rely on
     */
 
     public static open() {

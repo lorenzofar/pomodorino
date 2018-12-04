@@ -35,7 +35,7 @@ class SettingsManager {
         this.initMutex.lock(this.touchConfigFile);
         this.initMutex.lock(this.readConfigFile);
 
-        //TODO: Continue initialization
+        //TODO: Continue initialization id:36
     }
 
     /* ===== CONFIG FILE MANAGEMENT ===== */
@@ -64,9 +64,9 @@ class SettingsManager {
     }
 
     private static createBlankConfig() {
-        //TODO: Create config file with blank structure
-        //TODO: Add sensors to initial thresholds
-        //TODO: When retrieving settings also check if field exists for that sensor
+        //TODO: Create config file with blank structure id:41
+        //TODO: Add sensors to initial thresholds id:46
+        //TODO: When retrieving settings also check if field exists for that sensor id:56
         console.log(`[SETTINGS] config file is missing, initializing...`);
         let blankConfig: Config = {
             credentials: {

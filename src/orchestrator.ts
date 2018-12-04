@@ -26,11 +26,11 @@ class Orchestrator {
     }
 
     private static tick() {
-        //TODO: Read data from sensors
+        //TODO: Read data from sensors id:50
         let data = DataRetriever.data;
-        //TODO: Call analyzer function
-        //TODO: Pack everything
-        //TODO: Check if the socket is active and send
+        //TODO: Call analyzer function id:35
+        //TODO: Pack everything id:40
+        //TODO: Check if the socket is active and send id:45
     }
 }
 

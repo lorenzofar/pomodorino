@@ -9,7 +9,7 @@
  *  - AP ON / the device creates an AP to change settings
  */
 
-// NOTE: During configuration, the device continues working
+// NOTE: During configuration, the device continues working id:54
 import { modes, modeSubscriber } from "./models/modes";
 
 class ModeManager {
