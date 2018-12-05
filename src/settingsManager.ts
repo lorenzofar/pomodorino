@@ -38,6 +38,10 @@ class SettingsManager {
         //TODO: Continue initialization
     }
 
+    public static get config(){
+        return this.readConfigFile();
+    }
+
     /* ===== CONFIG FILE MANAGEMENT ===== */
 
     private static touchConfigFile() {
