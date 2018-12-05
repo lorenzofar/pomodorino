@@ -7,6 +7,7 @@
 import * as socket_io from "socket.io-client";
 
 import { modes } from "./models/modes";
+import DataPoint from "./models/dataPoint";
 import ModeManager from "./modeManager";
 
 import CredentialsManager from "./credentialsManager";
@@ -53,6 +54,14 @@ class SocketManager {
             this.disconnect();
         }
     }
+
+    /* ===== DATA EMISSION ===== */
+    public static emitDataPoint(point: DataPoint) {
+        if (this.io.connected) // Check if the client is connected
+            this.io.emit("data", point); // Emit data point to server
+    }
+
+    /* ===== CONNECTION MANAGEMENT ===== */
 
     public static connect() {
         if (this.io == null) return;
