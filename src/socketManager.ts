@@ -9,7 +9,9 @@ import * as socket_io from "socket.io-client";
 import { modes } from "./models/modes";
 import ModeManager from "./modeManager";
 
-const SOCKET_URL: string = "http://localhost:3000";
+import CredentialsManager from "./credentialsManager";
+
+const { SOCKET_URL = "http://localhost:3000" } = process.env;
 
 const ID = "socketmanager";
 
@@ -19,7 +21,7 @@ class SocketManager {
     //TODO: Hook module to credentials manager to fire an event 
     // when credentials change and reconnect the socket accordingly
 
-    //TODO: During initialization, socket manager should understand in which the 
+    //TODO: During initialization, socket manager should understand in which mode the 
     // device is working in and start the websocket if needed
 
     public static initialize() {
@@ -27,23 +29,24 @@ class SocketManager {
         console.log("[SOCKET] initializing");
 
         /* ===== BINDINGS ===== */
-
         this.handleModeChange = this.handleModeChange.bind(this);
 
-        let email: string;
-        let password: string;
-        let qs = `username=${email}&password=${password}&mode=provider`;
+        /* ===== HANDSHAKE CONFIG ===== */
+        let credentials = CredentialsManager.credentials;
+        let qs = `username=${credentials.username}&password=${credentials.password}&mode=provider`;
         this.io = socket_io(SOCKET_URL, { autoConnect: false, query: qs });
+
+        /** NOTE:
+         * Here we do not perform a check on credentials to prevent connecting when they are null, 
+         * since the connection request will be rejected by the server and would be a useless check
+         */
 
         // Subscribe to mode manager and listen to changes
         let subscriptionResult = ModeManager.subscribe({ id: ID, handler: this.handleModeChange });
-
-        // Subscribe to mode changes
     }
 
     private static handleModeChange(mode: modes) {
-        //TODO: Connect / disconnect socket accordingly
-        if (mode == modes.STREAM) {
+        if (mode === modes.STREAM) {
             this.connect();
         }
         else {
@@ -52,13 +55,13 @@ class SocketManager {
     }
 
     public static connect() {
-        // Before doing anything, check connection status
-        //TODO: Retrieve credentials and build handshake message  
         if (this.io == null) return;
 
         console.log("[SOCKET] opening connection")
 
         this.io.open();
+
+        //TODO: Find a way to understand if an error happened during connection
 
         this.io.on("connect", () => {
             console.log("Socket connected");
@@ -71,8 +74,6 @@ class SocketManager {
 
     public static disconnect() {
         console.log("[SOCKET] closing connection");
-
-        // Before doing anything, check connection status
         this.io.disconnect();
         this.io.close();
     }
