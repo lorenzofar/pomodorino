@@ -1,3 +1,5 @@
+import SettingsManager from "./settingsManager";
+
 /**
  * This module provides access to user credentials
  * It is used to retrieve user information in order
@@ -5,7 +7,10 @@
  */
 
 class CredentialsManager {
-
+    public static get credentials(){
+        let config = SettingsManager.config;
+        return config.credentials;
+    }
 }
 
 export default CredentialsManager;
