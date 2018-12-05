@@ -38,7 +38,7 @@ class SettingsManager {
         //TODO: Continue initialization
     }
 
-    public static get config(){
+    public static get config() {
         return this.readConfigFile();
     }
 
@@ -63,7 +63,7 @@ class SettingsManager {
 
         let rawData = fs.readFileSync(`./${CONFIG_FILE_NAME}`, "utf8");
         let data: Config = JSON.parse(rawData); // Parse JSON string
-        this.initMutex.unlock();
+        if (this.initMutex.isLocked) this.initMutex.unlock();
         return data;
     }
 
