@@ -19,6 +19,7 @@ require("./orchestrator");
 require("./settingsManager");
 require("./modeManager");
 require("./socketManager");
+require("./serverManager");
 require("./dataRetriever");
 
 import * as figlet from "figlet";
