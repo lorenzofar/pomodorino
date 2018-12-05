@@ -75,8 +75,10 @@ class ServerManager {
     }
 
     public static close() {
-        this._server.close();
-        console.log("[SERVER] < closing server");
+        if (this._server) {
+            this._server.close();
+            console.log("[SERVER] < closing server");
+        }
     }
 }
 
