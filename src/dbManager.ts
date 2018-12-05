@@ -32,7 +32,6 @@ class DbManager {
      */
     public static async touchUserTable(username: string) {
         let tableExists = await this.dbClient.schema.hasTable(username);
-        console.log(tableExists);
         if (!tableExists)
             this.createUserTable(username);
     }
