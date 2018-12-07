@@ -20,6 +20,8 @@ class SettingsManager {
 
     private static initMutex: locks.Mutex;
 
+    //TODO: Add subscription model
+
     public static initialize() {
 
         console.log("[SETTINGS] initializing");
@@ -45,7 +47,8 @@ class SettingsManager {
     /* ===== CONFIG FILE MANAGEMENT ===== */
 
     private static touchConfigFile() {
-        if (!this.configExists()) this.createBlankConfig();
+        let fileExists = this.configExists();
+        if (!fileExists) this.createBlankConfig();
         else this.initMutex.unlock();
     }
 
