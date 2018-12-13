@@ -1,4 +1,5 @@
 import * as knex from "knex";
+import * as locks from "locks";
 
 import DataPoint from "./models/dataPoint";
 
@@ -11,19 +12,34 @@ class DbManager {
 
     private static dbClient: knex;
 
+    private static dbMutex: locks.Mutex;
+
     public static initialize() {
 
         console.log("[DB] initializing");
 
         this.dbClient = knex(config);
+        this.dbMutex = new locks.Mutex();
 
         /* ===== BINDINGS ===== */
         this.touchUserTable = this.touchUserTable.bind(this);
         this.createUserTable = this.createUserTable.bind(this);
+        this.insertDataPoint = this.insertDataPoint.bind(this);
     }
 
-    public static insertDataPoint(dataPoint: DataPoint) {
-        //TODO: 
+    public static async insertDataPoint(username: string, dataPoint: DataPoint) {
+        if (!username || username == "") return;
+        await this.touchUserTable(username);
+        this.dbMutex.lock(() => {
+            this.dbClient(username).insert(dataPoint.data)
+                .catch(err => {
+                    console.log(`[DB] error occurred during insertion`);
+                    console.error(err);
+                })
+                .finally(() => {
+                    this.dbMutex.unlock();
+                })
+        });
     }
 
     /**
