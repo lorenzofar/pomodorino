@@ -1,7 +1,7 @@
 import * as moment from "moment";
 import DataPoint from "./models/dataPoint";
 
-import * as dhtSensor from "node-dht-sensor";
+const dhtSensor = require("node-dht-sensor");
 
 /**
  * This module provides data to the analyzer
@@ -15,7 +15,7 @@ class DataRetriever {
 
 
     public static initialize() {
-        console.log("[RETRIEVER] initializing");
+	console.log("[RETRIEVER] initializing");
         this.readData = this.readData.bind(this);
     }
 

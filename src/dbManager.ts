@@ -60,8 +60,8 @@ class DbManager {
         //FIXME: change columns with real data we retrieve
         console.log(`[DB] creating table for user ${username}`);
         this.dbClient.schema.createTable(username, tableBuilder => {
-            tableBuilder.float("light");
-            tableBuilder.float("noise");
+            tableBuilder.float("temperature");
+            tableBuilder.float("humidity");
             tableBuilder.timestamp("timestamp").defaultTo(this.dbClient.fn.now()).primary();
             tableBuilder.unique(["timestamp"]);
         }).then(result => {

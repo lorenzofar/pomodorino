@@ -36,10 +36,10 @@ class ModeManager {
         this.toggleConfigMode = this.toggleConfigMode.bind(this);
 
         // Get buttons and bind them to mode change
-        this.STREAM_BTN = new Gpio(STREAMING_BTN_PIN, "in", "rising");
-        this.CONFIG_BTN = new Gpio(CONFIG_BTN_PIN, "in", "rising");
-        this.STREAM_BTN.watch(this.toggleStreamMode);
-        this.CONFIG_BTN.watch(this.toggleConfigMode);
+	//this.STREAM_BTN = new Gpio(STREAMING_BTN_PIN, "in", "rising");
+	//this.CONFIG_BTN = new Gpio(CONFIG_BTN_PIN, "in", "rising");
+	//this.STREAM_BTN.watch(this.toggleStreamMode);
+	//this.CONFIG_BTN.watch(this.toggleConfigMode);
     }
 
     public static subscribe(subscriber: modeSubscriber): boolean {
