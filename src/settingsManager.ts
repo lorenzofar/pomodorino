@@ -40,8 +40,12 @@ class SettingsManager {
         //TODO: Continue initialization
     }
 
-    public static get config() {
-        return this.readConfigFile();
+    public static getConfig(callback: (result: Config) => void) {
+
+        this.initMutex.lock(() => {
+            let config = this.readConfigFile();
+            callback(config);
+        });
     }
 
     /* ===== CONFIG FILE MANAGEMENT ===== */
@@ -54,7 +58,9 @@ class SettingsManager {
 
     private static writeConfigFile(config: Config) {
         let jsonConfig = JSON.stringify(config);
-        fs.writeFile(`./${CONFIG_FILE_NAME}`, jsonConfig, "utf8", () => {
+        console.log("Wiriting file");
+        console.log(jsonConfig);
+        fs.writeFile(`./${CONFIG_FILE_NAME}`, jsonConfig, () => {
             console.log("[SETTINGS] written config file");
             this.initMutex.unlock();
         });
@@ -62,9 +68,9 @@ class SettingsManager {
 
     private static readConfigFile(): Config {
         // The function always provides a configuration object
-        // If the file is not present, it is created and then returned
-
+        // If the file is not present, it is created and then returne
         let rawData = fs.readFileSync(`./${CONFIG_FILE_NAME}`, "utf8");
+        console.log(rawData);
         let data: Config = JSON.parse(rawData); // Parse JSON string
         if (this.initMutex.isLocked) this.initMutex.unlock();
         return data;

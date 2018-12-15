@@ -33,17 +33,18 @@ class SocketManager {
         this.handleModeChange = this.handleModeChange.bind(this);
 
         /* ===== HANDSHAKE CONFIG ===== */
-        let credentials = CredentialsManager.credentials;
-        let qs = `username=${credentials.username}&password=${credentials.password}&mode=provider`;
-        this.io = socket_io(SOCKET_URL, { autoConnect: false, query: qs });
+        CredentialsManager.getCredentials(credentials => {
+            let qs = `username=${credentials.username}&password=${credentials.password}&mode=provider`;
+            this.io = socket_io(SOCKET_URL, { autoConnect: false, query: qs });
 
-        /** NOTE:
-         * Here we do not perform a check on credentials to prevent connecting when they are null, 
-         * since the connection request will be rejected by the server and would be a useless check
-         */
+            /** NOTE:
+             * Here we do not perform a check on credentials to prevent connecting when they are null, 
+             * since the connection request will be rejected by the server and would be a useless check
+             */
 
-        // Subscribe to mode manager and listen to changes
-        let subscriptionResult = ModeManager.subscribe({ id: ID, handler: this.handleModeChange });
+            // Subscribe to mode manager and listen to changes
+            let subscriptionResult = ModeManager.subscribe({ id: ID, handler: this.handleModeChange });
+        });
     }
 
     private static handleModeChange(mode: modes) {

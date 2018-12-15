@@ -7,9 +7,10 @@ import SettingsManager from "./settingsManager";
  */
 
 class CredentialsManager {
-    public static get credentials(){
-        let config = SettingsManager.config;
-        return config.credentials;
+    public static getCredentials(callback: (credentials: any) => void) {
+        SettingsManager.getConfig((config) => {
+            callback(config.credentials);
+        });
     }
 }
 
