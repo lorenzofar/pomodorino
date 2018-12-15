@@ -11,9 +11,16 @@
 
 // NOTE: During configuration, the device continues working
 import { modes, modeSubscriber } from "./models/modes";
+import { Gpio } from "onoff";
+
+const STREAMING_BTN_PIN = 2;
+const CONFIG_BTN_PIN = 3;
 
 class ModeManager {
     private static _mode: modes;
+
+    private static STREAM_BTN: Gpio;
+    private static CONFIG_BTN: Gpio;
 
     private static subscribers: modeSubscriber[];
 
@@ -25,6 +32,14 @@ class ModeManager {
         this._mode = modes.AUTO;
         this.subscribers = [];
         this.subscribe = this.subscribe.bind(this);
+        this.toggleStreamMode = this.toggleStreamMode.bind(this);
+        this.toggleConfigMode = this.toggleConfigMode.bind(this);
+
+        // Get buttons and bind them to mode change
+        this.STREAM_BTN = new Gpio(STREAMING_BTN_PIN, "in", "rising");
+        this.CONFIG_BTN = new Gpio(CONFIG_BTN_PIN, "in", "rising");
+        this.STREAM_BTN.watch(this.toggleStreamMode);
+        this.CONFIG_BTN.watch(this.toggleConfigMode);
     }
 
     public static subscribe(subscriber: modeSubscriber): boolean {
@@ -49,6 +64,15 @@ class ModeManager {
         console.log("[MODE] notifying subscribers");
         this.subscribers.forEach(s => s.handler(this._mode));
     }
+
+    /* ===== MODES TOGGLING ===== */
+    private static toggleStreamMode(){
+        this.mode = modes.STREAM;
+    }
+
+    private static toggleConfigMode(){
+        this.mode = modes.CONFIG;
+    }   
 }
 
 ModeManager.initialize();
