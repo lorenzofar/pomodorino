@@ -1,8 +1,12 @@
 import * as http from "http";
 import * as express from "express";
+import * as path from "path";
+import * as request from "request";
 
 import ModeManager from "./modeManager";
 import { modes } from "./models/modes";
+import CredentialsManager from "./credentialsManager";
+
 
 const { PORT = 3000 } = process.env;
 
@@ -26,7 +30,32 @@ class ServerManager {
         this.app = express();
 
         this.app.get("/", (req: express.Request, res: express.Response) => {
-            res.send("pomodorino is alive");
+            res.sendFile(path.join(__dirname + '/settingsPage.html'));
+        });
+
+        this.app.get("/login", (req: express.Request, res: express.Response) => {
+            let qs = req.query;
+            let username = qs && qs.username;
+            let password = qs && qs.password;
+            if (!username || !password) res.status(400).end();
+
+            // Perform a request to electra
+            // If succesful change content of credentials
+
+            request.post("https://necstelectra.herokuapp.com/login", { form: { username: username, password: password, headless: true } },
+                (err, response, body) => {
+                    console.log(err);
+                    console.log(response.statusCode);
+                    switch (response.statusCode) {
+                        case 200: // login succesful
+                            CredentialsManager.updateUser(username, password);
+                            res.status(200).send("credentials updated")
+                            break;
+                        case 403: // login error
+                            res.status(403).send("login error");
+                            break;
+                    }
+                }); 
         });
         //TODO: Set up other routes to change settings
     }

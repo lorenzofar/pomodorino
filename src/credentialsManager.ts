@@ -12,6 +12,13 @@ class CredentialsManager {
             callback(config.credentials);
         });
     }
+
+    // Update the user stored in the device
+    public static updateUser(username: string, password: string) {
+        SettingsManager.setCredentials({ username: username, password: password }, () => {
+            console.log("[CREDENTIALS] credentials updated succesfully");
+        });
+    }
 }
 
 export default CredentialsManager;

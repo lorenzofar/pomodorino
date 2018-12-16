@@ -48,6 +48,17 @@ class SettingsManager {
         });
     }
 
+    public static setCredentials(credentials: any, callback: (result: boolean) => void) {
+        // First get the config
+        // Update credentials
+        // write back
+        this.getConfig((config) => {
+            config.credentials = credentials;
+            this.initMutex.lock(() => this.writeConfigFile(config));
+            callback(true);
+        })
+    }
+
     /* ===== CONFIG FILE MANAGEMENT ===== */
 
     private static touchConfigFile() {
@@ -58,8 +69,6 @@ class SettingsManager {
 
     private static writeConfigFile(config: Config) {
         let jsonConfig = JSON.stringify(config);
-        console.log("Wiriting file");
-        console.log(jsonConfig);
         fs.writeFile(`./${CONFIG_FILE_NAME}`, jsonConfig, () => {
             console.log("[SETTINGS] written config file");
             this.initMutex.unlock();
@@ -70,7 +79,6 @@ class SettingsManager {
         // The function always provides a configuration object
         // If the file is not present, it is created and then returne
         let rawData = fs.readFileSync(`./${CONFIG_FILE_NAME}`, "utf8");
-        console.log(rawData);
         let data: Config = JSON.parse(rawData); // Parse JSON string
         if (this.initMutex.isLocked) this.initMutex.unlock();
         return data;
