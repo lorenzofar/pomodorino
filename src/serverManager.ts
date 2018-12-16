@@ -33,7 +33,7 @@ class ServerManager {
 
     private static handleModeChange(mode: modes) {
         console.log("[SERVER] received mode change notification");
-        if (mode === modes.CONFIG) {
+        if (mode === modes.CONFIG || mode === modes.STREAM) {
             this.open();
         }
         else {
