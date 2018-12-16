@@ -32,16 +32,13 @@ class Orchestrator {
 
     private static tick() {
         //TODO: Read data from sensors
-	let data = DataRetriever.data;
-	if(!data) return;
-        DbManager.insertDataPoint(this.username, data);
-	if (ModeManager.mode === modes.STREAM) SocketManager.emitDataPoint(data);
-
-	this.tickCount++;
-	if(this.tickCount == 2) ModeManager.mode = modes.STREAM;
-        //TODO: Call analyzer function
-        //TODO: Pack everything
-        //TODO: Check if the socket is active and send
+        let data = DataRetriever.data;
+        if (data) {
+            DbManager.insertDataPoint(this.username, data);
+            if (ModeManager.mode === modes.STREAM) SocketManager.emitDataPoint(data);
+        }
+        this.tickCount++;
+        if (this.tickCount == 2) ModeManager.mode = modes.STREAM;
     }
 }
 
